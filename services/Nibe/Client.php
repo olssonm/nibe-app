@@ -4,11 +4,16 @@ namespace Services\Nibe;
 
 use League\OAuth2\Client\Token\AccessToken;
 use Olssonm\OAuth2\Client\Provider\Nibe;
-
+use Services\Nibe\Actions\ManagesSystemParameters;
+use Services\Nibe\Actions\ManagesSystems;
 use Storage;
 
 class Client
 {
+    use ManagesSystemParameters,
+        ManagesSystems,
+        MakesHttpRequests;
+
     protected $token;
 
     protected $client;
@@ -22,8 +27,7 @@ class Client
         }
 
         $this->client = new Nibe(config('services.nibe') + [
-            'redirectUri' => route('authorize.capture'),
-            'scope' => ['READSYSTEM']
+            'redirectUri' => route('authorize.capture')
         ]);
     }
 
@@ -35,28 +39,11 @@ class Client
     public function setAccessToken(string $code)
     {
         $this->token = $this->client->getAccessToken('authorization_code', [
-            'code' => $code,
-            'scope' => ['READSYSTEM']
+            'code' => $code
         ]);
 
         // Store token
         Storage::disk('token')->put('token.txt', json_encode($this->token->jsonSerialize()));
-    }
-
-    public function request(string $endpoint, array $params = [])
-    {
-        if ($this->token->hasExpired()) {
-            $this->token = $this->refreshToken($this->token);
-        }
-
-        $request = $this->client->getAuthenticatedRequest(
-            'GET',
-            sprintf('https://api.nibeuplink.com/api/v1/%s', $endpoint),
-            $this->token,
-            $params
-        );
-
-        return (string) $this->client->getResponse($request)->getBody();
     }
 
     private function refreshToken($token) {

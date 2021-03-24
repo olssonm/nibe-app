@@ -16,12 +16,6 @@ class NibeController extends Controller
     public function test()
     {
         $client = new Client();
-        $params = http_build_query([
-            'parameterIds' => [
-                'indoor_temperature',
-                'outdoor_temperature'
-            ]
-        ]);
-        dd($client->request('systems/111463/parameters?' . $params));
+        dd($client->getSystems());
     }
 }
