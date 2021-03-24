@@ -52,6 +52,10 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'token' => [
+            'driver' => 'local',
+            'root' => storage_path('app/token'),
+        ]
     ],
 
     /*

@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'nibe' => [
+        'clientId' => env('NIBE_CLIENT_ID'),
+        'clientSecret' => env('NIBE_CLIENT_SECRET')
+    ]
+
 ];
