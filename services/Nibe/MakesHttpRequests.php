@@ -17,7 +17,7 @@ trait MakesHttpRequests
     public function request(string $verb, string $endpoint, array $payload = [])
     {
         if ($this->token->hasExpired()) {
-            $this->token = $this->refreshToken($this->token);
+            $this->refreshToken($this->token);
         }
 
         $request = $this->client->getAuthenticatedRequest(

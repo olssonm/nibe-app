@@ -16,6 +16,7 @@ class NibeController extends Controller
     public function test()
     {
         $client = new Client();
-        dd($client->getSystems());
+        // dd($client->getSystems());
+        dd($client->getParameters('111463'));
     }
 }
