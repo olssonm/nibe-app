@@ -10,4 +10,9 @@ class Fetch extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function parameters()
+    {
+        return $this->hasMany(Parameter::class);
+    }
 }

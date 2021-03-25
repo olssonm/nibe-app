@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class System extends Model
 {
     use HasFactory;
+
+    public function fetches()
+    {
+        return $this->hasMany(Fetch::class);
+    }
+
+    public function parameters()
+    {
+        return $this->hasManyThrough(Parameter::class, Fetch::class)
+            ->orderBy('created_at', 'ASC');
+    }
 }

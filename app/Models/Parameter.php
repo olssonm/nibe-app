@@ -11,6 +11,11 @@ class Parameter extends Model
 
     protected $guarded = [];
 
+    public function fetch()
+    {
+        return $this->belongsTo(Fetch::class);
+    }
+
     public function getValueAttribute()
     {
         $attribute = $this->attributes['value'];

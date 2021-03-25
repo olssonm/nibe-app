@@ -9,12 +9,14 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "khill/lavacharts": "^3.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "olssonm/l5-very-basic-auth": "^6.5",
         "olssonm/oauth2-nibe": "dev-master"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.5",
         "barryvdh/laravel-ide-helper": "^2.9",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",

@@ -28,7 +28,7 @@ class Client
      */
     protected $client;
 
-    public function __construct()
+    public function __construct(array $params = [])
     {
         // If token is present
         if ($this->tokenExists()) {
@@ -36,19 +36,24 @@ class Client
             $this->token = new AccessToken(json_decode($data, true));
         }
 
-        $this->client = new Nibe(config('services.nibe') + [
-            'redirectUri' => route('authorize.capture')
-        ]);
+        $params = array_merge(
+            config('services.nibe'),
+            ['redirectUri' => route('auth.callback')],
+            $params
+        );
+
+        $this->client = new Nibe($params);
     }
 
     /**
      * Get the URL used for oauth-authorization
      *
+     * @param array $params
      * @return string
      */
-    public function getAuthorizationUrl(): string
+    public function getAuthorizationUrl(array $params = []): string
     {
-        return $this->client->getAuthorizationUrl();
+        return $this->client->getAuthorizationUrl($params);
     }
 
     /**

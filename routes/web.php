@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthorizeController;
-use App\Http\Controllers\NibeController;
+use App\Http\Controllers\AuthorizationController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SystemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,8 +17,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::group(['middleware' => 'auth.very_basic'], function () {
-    Route::get('/', [NibeController::class, 'index'])->name('dashboard');
-    Route::get('/test', [NibeController::class, 'test']);
-// });
+Route::group([], function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/oauth', [AuthorizeController::class, 'capture'])->name('authorize.capture');
+    // Systems
+    Route::get('/systems', [SystemController::class, 'index'])->name('systems.index');
+    Route::post('/systems', [SystemController::class, 'save'])->name('systems.save');
+
+    // Auth
+    Route::get('/auth', [AuthorizationController::class, 'nibe'])->name('auth.nibe');
+    Route::get('/auth/callback', [AuthorizationController::class, 'callback'])->name('auth.callback');
+});

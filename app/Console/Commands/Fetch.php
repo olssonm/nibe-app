@@ -50,6 +50,8 @@ class Fetch extends Command
         $client = new Client();
         $data = $client->getParameters($system->system_id);
 
+        dd(json_encode($data));
+
         foreach ($data as $datum) {
             Parameter::create([
                 'name' => $datum->name,
@@ -59,5 +61,6 @@ class Fetch extends Command
             ]);
         }
 
+        return $this->info(sprintf('Fetched parameters @ %s', now()->format('Y-m-d H:i:s')));
     }
 }
