@@ -6,7 +6,7 @@ use App\Models\Fetch as FetchModel;
 use App\Models\Parameter;
 use App\Models\System;
 use Illuminate\Console\Command;
-use Services\Nibe\Client;
+use App\Services\Nibe\Client;
 
 class Fetch extends Command
 {
@@ -49,8 +49,6 @@ class Fetch extends Command
 
         $client = new Client();
         $data = $client->getParameters($system->system_id);
-
-        dd(json_encode($data));
 
         foreach ($data as $datum) {
             Parameter::create([

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NibeCallbackRequest;
 use Illuminate\Support\Str;
-use Services\Nibe\Client;
+use App\Services\Nibe\Client;
 
 class AuthorizationController extends Controller
 {
@@ -13,7 +13,7 @@ class AuthorizationController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function nibe()
+    public function auth()
     {
         $state = Str::random();
         session([
@@ -41,6 +41,6 @@ class AuthorizationController extends Controller
         session()->forget('state');
 
         // Redirect to dashboard
-        return redirect()->route('dashboard');
+        return redirect()->route('setup.index');
     }
 }

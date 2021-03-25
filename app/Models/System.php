@@ -9,6 +9,8 @@ class System extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function fetches()
     {
         return $this->hasMany(Fetch::class);
