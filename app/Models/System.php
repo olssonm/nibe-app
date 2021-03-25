@@ -9,7 +9,13 @@ class System extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $guarded = [];
+
+    protected $dates = [
+        'created_at',
+    ];
 
     public function fetches()
     {

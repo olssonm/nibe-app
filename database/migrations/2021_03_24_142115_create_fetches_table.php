@@ -16,7 +16,6 @@ class CreateFetchesTable extends Migration
         Schema::create('fetches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('system_id')->constrained('systems');
-            $table->timestamps();
         });
     }
 

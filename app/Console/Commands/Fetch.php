@@ -53,7 +53,6 @@ class Fetch extends Command
         foreach ($data as $datum) {
             Parameter::create([
                 'name' => $datum->name,
-                'unit' => $datum->unit,
                 'value' => $datum->rawValue,
                 'fetch_id' => $fetch->id
             ]);

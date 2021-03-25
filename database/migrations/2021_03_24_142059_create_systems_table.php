@@ -19,7 +19,7 @@ class CreateSystemsTable extends Migration
             $table->string('name');
             $table->string('product');
             $table->string('serial_number');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

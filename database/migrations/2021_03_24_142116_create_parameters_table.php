@@ -16,10 +16,9 @@ class CreateParametersTable extends Migration
         Schema::create('parameters', function (Blueprint $table) {
             $table->id();
             $table->foreignId('fetch_id')->constrained('fetches');
-            $table->string('name');
-            $table->string('unit');
+            $table->string('name')->index();
             $table->integer('value');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
