@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\System;
 use App\Services\Range;
+use Carbon\Carbon;
 
 class ChartRepository
 {
@@ -16,6 +17,21 @@ class ChartRepository
                         ->where('parameters.created_at', '<=', $range->to);
                 });
         }]);
+
+        $system->parameters = $system->parameters->groupBy(function($item) {
+            return $item->created_at->format('Ymd');
+        })->map(function($item) use ($datapoints) {
+            $data = [];
+            foreach ($datapoints as $value) {
+                $data[] = collect([
+                    'name' => $value,
+                    'value' => round($item->where('name', $value)->avg('value'), 1),
+                    'fetch_id' => $item->first()->fetch_id,
+                    'created_at' => Carbon::parse($item->first()->created_at)
+                ]);
+            }
+            return $data;
+        })->flatten(1);
 
         $datasets = [];
         foreach ($datapoints as $value) {
@@ -33,5 +49,10 @@ class ChartRepository
         ]);
 
         return $data;
+    }
+
+    private function group(Range $range, $collection)
+    {
+        # code...
     }
 }

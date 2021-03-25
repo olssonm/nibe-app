@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 class Range
 {
+    public $grouping = null;
+
     public $range;
 
     public $from;
