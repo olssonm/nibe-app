@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SystemController;
+use App\Http\Controllers\SetupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +21,10 @@ Route::group([], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Systems
-    Route::get('/systems', [SystemController::class, 'index'])->name('systems.index');
-    Route::post('/systems', [SystemController::class, 'save'])->name('systems.save');
+    Route::get('/setup', [SetupController::class, 'index'])->name('setup.index');
+    Route::post('/setup', [SetupController::class, 'store'])->name('setup.store');
 
     // Auth
-    Route::get('/auth', [AuthorizationController::class, 'nibe'])->name('auth.nibe');
+    Route::get('/auth', [AuthorizationController::class, 'auth'])->name('auth.auth');
     Route::get('/auth/callback', [AuthorizationController::class, 'callback'])->name('auth.callback');
 });

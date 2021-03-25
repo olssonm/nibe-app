@@ -9,9 +9,10 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "khill/lavacharts": "^3.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
+        "laravelcollective/html": "^6.2",
+        "livewire/livewire": "^2.4",
         "olssonm/l5-very-basic-auth": "^6.5",
         "olssonm/oauth2-nibe": "dev-master"
     },
