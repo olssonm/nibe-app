@@ -1,62 +1,74 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Nibe Uplink-app
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A ready-to-use app for local data-gathering for NIBE's heat systems via the Uplink API.
 
-## About Laravel
+<img width="1164" alt="Screenshot 2021-03-26 at 09 39 03" src="https://user-images.githubusercontent.com/907114/112606094-4735ce80-8e18-11eb-9955-dba435aa2411.png">
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+*Note:* This application only communicates via the Nibe Uplink-API, not the myUplink-API which for example the S-series uses.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+As this project is built on the Laravel-framework, getting started is quite simple. Just make sure your server and/or host fullfill the requirements [listed in the documentation](https://laravel.com/docs/8.x/deployment#server-requirements). 
 
-## Learning Laravel
+This application should be able to run on for example a Raspberry Pi or a low end VPS.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+You can either clone this repo via Git (or download it directly) and then install the dependencies:
 
-## Laravel Sponsors
+```
+$ git clone olssonm/nibe-app
+$ cd olssonm/nibe-app
+$ composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Or install it via `create-project`:
 
-### Premium Partners
+```
+$ composer create-project olssonm/nibe-app
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+Then edit your .env-file to setup your URL and database- and NIBE-credentials.
 
-## Contributing
+Finally, run the migrations:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+$ php artisan migrate
+```
 
-## Code of Conduct
+### Usage
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+To be able to use this application you will first need to go through a few steps:
 
-## Security Vulnerabilities
+1. Connect your heat system to [Nibe Uplink](https://www.nibeuplink.com/)
+2. Create a developer-account on the [Nibe Uplink developer-portal](https://api.nibeuplink.com/)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+After that you can navigate to your configured application URL and go through the setup-wizard where you get to select which system to connect:
 
-## License
+<img width="250" alt="Screenshot 2021-03-26 at 10 10 59" src="https://user-images.githubusercontent.com/907114/112609238-9a5d5080-8e1b-11eb-91ba-ab12ec9ca9cc.png">
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Data fetching**
+
+You can now setup a CRON-job to fetch data from the NIBE API, this is done via the `php artisan nibe:fetch`-command.
+
+While it is possible to retrieve data every minute or so, your heating system will probably only connect a few times per hour and a higher resolution than this might be unecessary. 
+
+A recommendation is to retrieve new data every 15-20 minutes or so.
+
+**Import**
+
+If your heating system has been connected to NIBE Uplink for a while you might want to import historical data. This is not possible via the API, but there's an import method for this.
+
+On the NIBE website, download a CSV containing BT7, BT1 and BT50-parameters and place the file in `storage/app/import` (without renaming it), and run `php artisan nibe:import` and it will try to insert all the data in the database. 
+
+*Note: you have to setup the application and go through the setup wizard before this step.*
+
+### Todo
+
+Future things to improve or implement. PRs are welcome!
+
+- Read more parameters than the four that is currently read
+- Implement a custom range with a datepicker instead of "just" predefined ranges
+- Read the smart-pricing levels (I myself do not have this active and can therefore not read those levels)
+- Support more systems than one
+- Methods via the WRITESYSTEM-scope to enable updating settings remotely (might require a premium account)
