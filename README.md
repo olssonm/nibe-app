@@ -1,10 +1,14 @@
 ## Nibe Uplink-app
 
-A ready-to-use app for local data-gathering for NIBE's heat systems via the Uplink API.
+A ready-to-use app for local data-gathering for NIBE's heat systems via the NIBE Uplink API.
 
 <img width="1164" alt="Screenshot 2021-03-26 at 09 39 03" src="https://user-images.githubusercontent.com/907114/112606094-4735ce80-8e18-11eb-9955-dba435aa2411.png">
 
-*Note:* This application only communicates via the Nibe Uplink-API, not the myUplink-API which for example the S-series uses.
+This app is very much opinionated and built for myself and my own use cases, but feel free to fork and use. If there are any missing features or bugs, PRs are welcome.
+
+I've also released an oauth-provider built on [thephpleague/oauth2-client](https://github.com/thephpleague/oauth2-client) if you rather build your own app from scratch.
+
+*Note: This application only communicates via the Nibe Uplink-API, not the myUplink-API which for example the S-series uses.*
 
 ### Prerequisites
 
@@ -45,13 +49,17 @@ To be able to use this application you will first need to go through a few steps
 
 After that you can navigate to your configured application URL and go through the setup-wizard where you get to select which system to connect:
 
-<img width="250" alt="Screenshot 2021-03-26 at 10 10 59" src="https://user-images.githubusercontent.com/907114/112609238-9a5d5080-8e1b-11eb-91ba-ab12ec9ca9cc.png">
+<img width="300" alt="Screenshot 2021-03-26 at 10 10 59" src="https://user-images.githubusercontent.com/907114/112609238-9a5d5080-8e1b-11eb-91ba-ab12ec9ca9cc.png">
 
 **Data fetching**
 
-You can now setup a CRON-job to fetch data from the NIBE API, this is done via the `php artisan nibe:fetch`-command.
+You can now setup a CRON-job to fetch data from the NIBE API, this is done via the `nibe:fetch`-command:
 
-While it is possible to retrieve data every minute or so, your heating system will probably only connect a few times per hour and a higher resolution than this might be unecessary. 
+```
+$ php artisan nibe:fetch
+```
+
+While it is possible to retrieve data every minute or so, your heating system will probably only connect a few times per hour and a higher resolution than this might be unecessary and just cause the database to grow rapidly. 
 
 A recommendation is to retrieve new data every 15-20 minutes or so.
 
@@ -59,7 +67,11 @@ A recommendation is to retrieve new data every 15-20 minutes or so.
 
 If your heating system has been connected to NIBE Uplink for a while you might want to import historical data. This is not possible via the API, but there's an import method for this.
 
-On the NIBE website, download a CSV containing BT7, BT1 and BT50-parameters and place the file in `storage/app/import` (without renaming it), and run `php artisan nibe:import` and it will try to insert all the data in the database. 
+On the NIBE website, download a CSV containing BT7, BT1 and BT50-parameters and place the file in `/storage/app/import` (without renaming it), and run the `nibe:import`-command and it will try to insert all the data in the database. 
+
+```
+$ php artisan nibe:import
+```
 
 *Note: you have to setup the application and go through the setup wizard before this step.*
 
