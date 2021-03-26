@@ -88,12 +88,13 @@ class Import extends Command
             ]);
 
             foreach ($fields as $key => $name) {
+
                 // Assume bad row if count is wrong
                 if (count($data[$i]) < count($fields)) {
                     continue;
                 }
 
-                if (!is_numeric($data[$i][$key])) {
+                if (isset($data[$i][$key]) && !is_numeric($data[$i][$key])) {
                     continue;
                 }
 

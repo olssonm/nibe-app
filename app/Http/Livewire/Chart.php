@@ -16,7 +16,7 @@ class Chart extends Component
         'outdoor_temperature'
     ];
 
-    public string $range = 'today';
+    public string $range = 'last_30_days';
 
     public string $from;
 

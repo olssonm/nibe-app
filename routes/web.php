@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::group(['middleware' => 'auth.very_basic'], function () {
-Route::group([], function () {
+Route::group(['middleware' => 'auth.very_basic'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Systems

@@ -64,8 +64,7 @@
                         xAxisMode: 'tick'
                     },
                     lineOptions: {
-                        hideDots: 1,
-                        // spline: 1
+                        hideDots: 1
                     },
                     colors: ['#EF4444', '#F59E0B', '#10B981', '#3B82F6']
                 });
