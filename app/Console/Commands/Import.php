@@ -52,6 +52,8 @@ class Import extends Command
             return $this->error('/storage/app/import/historyexport.csv not found');
         }
 
+        $defaultFan = $this->ask('What is your default fan-speed? (Default 37)', 37);
+
         $file = Storage::path('import/historyexport.csv');
 
         $data = array_map(function ($row) {
@@ -77,6 +79,7 @@ class Import extends Command
                 $fields[$key] = 'indoor_temperature';
             }
         }
+        $fields[] = 'fan_speed';
 
         // Finally, do the import
         for ($i = 1; $i < count($data); $i++) {
@@ -84,7 +87,7 @@ class Import extends Command
                 'system_id' => $system->id
             ]);
 
-            foreach ($fields as $key => $value) {
+            foreach ($fields as $key => $name) {
                 // Assume bad row if count is wrong
                 if (count($data[$i]) < count($fields)) {
                     continue;
@@ -94,10 +97,12 @@ class Import extends Command
                     continue;
                 }
 
+                $value = ($name == 'fan_speed') ? $defaultFan : $data[$i][$key] * 10;
+
                 Parameter::create([
                     'fetch_id' => $fetch->id,
-                    'name' => $value,
-                    'value' => $data[$i][$key] * 10,
+                    'name' => $name,
+                    'value' => $value,
                     'created_at' => $data[$i][0] // Date field is always at "0"
                 ]);
             }
