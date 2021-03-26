@@ -4,7 +4,7 @@ A ready-to-use app for local data-gathering for NIBE's heat systems via the NIBE
 
 <img width="1164" alt="Screenshot 2021-03-26 at 09 39 03" src="https://user-images.githubusercontent.com/907114/112606094-4735ce80-8e18-11eb-9955-dba435aa2411.png">
 
-This app is very much opinionated and built for myself and my own use cases, but feel free to fork and use. If there are any missing features or bugs, PRs are welcome.
+This app is very much opinionated and built for myself and my own use cases, but feel free to fork and use. If there are any missing features or bugs, [PRs are very much welcome](https://github.com/olssonm/nibe-app/pulls).
 
 I've also released an oauth-provider built on [thephpleague/oauth2-client](https://github.com/thephpleague/oauth2-client) if you rather build your own app from scratch.
 
@@ -77,10 +77,16 @@ $ php artisan nibe:import
 
 ### Todo
 
-Future things to improve or implement. PRs are welcome!
+Future things to improve or implement. [PRs are welcome](https://github.com/olssonm/nibe-app/pulls)!
 
 - Read more parameters than the four that is currently read
 - Implement a custom range with a datepicker instead of "just" predefined ranges
 - Read the smart-pricing levels (I myself do not have this active and can therefore not read those levels)
 - Support more systems than one
 - Methods via the WRITESYSTEM-scope to enable updating settings remotely (might require a premium account)
+
+### License
+
+The MIT License (MIT). Please see the [LICENSE.md](LICENSE.md) for more information.
+
+© 2021 [Marcus Olsson](https://marcusolsson.me).
