@@ -20,17 +20,17 @@ class ChartRepository
      */
     public function compile(System $system, Range $range, array $datapoints)
     {
-        $system->load(['parameters' => function($q) use ($range, $datapoints) {
+        $system->load(['parameters' => function ($q) use ($range, $datapoints) {
             $q->whereIn('name', $datapoints)
-                ->where(function($q2) use ($range) {
+                ->where(function ($q2) use ($range) {
                     $q2->where('parameters.created_at', '>=', $range->from)
                         ->where('parameters.created_at', '<=', $range->to);
                 });
         }]);
 
-        $system->parameters = $system->parameters->groupBy(function($item) use ($range) {
+        $system->parameters = $system->parameters->groupBy(function ($item) use ($range) {
             return $item->created_at->format($range->format);
-        })->map(function($item) use ($datapoints) {
+        })->map(function ($item) use ($datapoints) {
             $data = [];
             foreach ($datapoints as $value) {
                 $data[] = collect([
@@ -52,9 +52,11 @@ class ChartRepository
         }
 
         $data = collect([
-            'labels' => $system->parameters->unique('fetch_id')->pluck('created_at')->map(function ($data) use ($range) {
-                return $data->format($range->format);
-            })->toArray(),
+            'labels' => $system->parameters->unique('fetch_id')->pluck('created_at')->map(
+                function ($data) use ($range) {
+                    return $data->format($range->format);
+                }
+            )->toArray(),
             'datasets' => $datasets
         ]);
 

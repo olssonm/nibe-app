@@ -72,20 +72,19 @@ class Import extends Command
             if (Str::contains($value, 'BT7')) {
                 $fields[$key] = 'hot_water_temperature';
             } elseif (Str::contains($value, 'BT1')) {
-               $fields[$key] = 'outdoor_temperature';
+                $fields[$key] = 'outdoor_temperature';
             } elseif (Str::contains($value, 'BT50')) {
                 $fields[$key] = 'indoor_temperature';
             }
         }
 
         // Finally, do the import
-        for ($i=1; $i < count($data); $i++) {
+        for ($i = 1; $i < count($data); $i++) {
             $fetch = Fetch::create([
                 'system_id' => $system->id
             ]);
 
             foreach ($fields as $key => $value) {
-
                 // Assume bad row if count is wrong
                 if (count($data[$i]) < count($fields)) {
                     continue;

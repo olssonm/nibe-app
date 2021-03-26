@@ -14,9 +14,9 @@ use Storage;
  */
 class Client
 {
-    use ManagesSystemParameters,
-        ManagesSystems,
-        MakesHttpRequests;
+    use ManagesSystemParameters;
+    use ManagesSystems;
+    use MakesHttpRequests;
 
     /**
      * @var \League\OAuth2\Client\Token\AccessTokenInterface

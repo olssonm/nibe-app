@@ -28,7 +28,7 @@ class Range
 
         $method = Str::camel($range);
 
-        if(method_exists($this, $method) && $method !== 'custom') {
+        if (method_exists($this, $method) && $method !== 'custom') {
             $this->$method();
         }
 
