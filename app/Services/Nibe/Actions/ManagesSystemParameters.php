@@ -7,6 +7,13 @@ namespace App\Services\Nibe\Actions;
  */
 trait ManagesSystemParameters
 {
+    /**
+     * Get the system parameters
+     *
+     * @param string $system
+     * @param array $payload
+     * @return stdObj
+     */
     public function getParameters(string $system, array $payload = [])
     {
         if (!count($payload)) {

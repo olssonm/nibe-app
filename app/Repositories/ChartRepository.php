@@ -8,6 +8,16 @@ use Carbon\Carbon;
 
 class ChartRepository
 {
+    /**
+     * Compile the data to a usable format for the charts.
+     * This method also handles the grouping-resolutions to avoid
+     * overpopulating the graph
+     *
+     * @param System $system
+     * @param Range $range
+     * @param array $datapoints
+     * @return \Illuminate\Support\Collection
+     */
     public function compile(System $system, Range $range, array $datapoints)
     {
         $system->load(['parameters' => function($q) use ($range, $datapoints) {
@@ -49,10 +59,5 @@ class ChartRepository
         ]);
 
         return $data;
-    }
-
-    private function group(Range $range, $collection)
-    {
-        # code...
     }
 }

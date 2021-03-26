@@ -14,6 +14,14 @@ trait MakesHttpRequests
         return $this->request('GET', $uri);
     }
 
+    /**
+     * Main request, automatically handles refreshing of tokens
+     *
+     * @param string $verb
+     * @param string $endpoint
+     * @param array $payload
+     * @return stdObj
+     */
     public function request(string $verb, string $endpoint, array $payload = [])
     {
         if ($this->token->hasExpired()) {

@@ -11,8 +11,9 @@ class DashboardController extends Controller
     {
         $system = System::first();
 
+        // If no system is set, redirect to setup procedure
         if (!$system) {
-            return redirect()->route('systems.index');
+            return redirect()->route('setup.index');
         }
 
         return view('dashboard.index', [

@@ -33,6 +33,7 @@ class Range
             $this->$method($from, $to);
         }
 
+        // Set the resolution/grouping based on the diff in days
         $diff = $this->from->diffInDays($this->to);
         if ($diff >= 32) {
             $this->format = $this->formats['daily'];

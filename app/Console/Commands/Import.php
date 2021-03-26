@@ -98,7 +98,8 @@ class Import extends Command
                 Parameter::create([
                     'fetch_id' => $fetch->id,
                     'name' => $value,
-                    'value' => $data[$i][$key] * 10
+                    'value' => $data[$i][$key] * 10,
+                    'created_at' => $data[$i][0] // Date field is always at "0"
                 ]);
             }
         }

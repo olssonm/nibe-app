@@ -10,19 +10,16 @@
     <div id="temperature-chart"></div>
 
     {{-- PARAMETERS --}}
-    <div>
-        <div class="row">
-            <div class="col-3">
-                <label for="range" class="form-label">Range</label>
-                {!! Form::select('range', config('nibe.ranges'), null, ['class' => 'form-select', 'wire:model' => 'range']) !!}
-            </div>
+    <div class="row my-4">
+        <div class="col-3">
+            <label for="range" class="form-label">Range</label>
+            {!! Form::select('range', config('nibe.ranges'), null, ['class' => 'form-select', 'wire:model' => 'range']) !!}
         </div>
     </div>
 
-    <div class="row mt-4">
+    <div class="row my-4">
         <div class="col-3">
             <label for="range" class="form-label">Parameters</label>
-
             @foreach (config('nibe.parameters') as $key => $name)
                 <div class="form-check">
                     <input id="{{ $key }}" class="form-check-input" type="checkbox" value="{{ $key }}" wire:model="datapoints">
@@ -31,9 +28,9 @@
                     </label>
                 </div>
             @endforeach
-
         </div>
     </div>
+
 </div>
 
 @push('scripts')
@@ -45,6 +42,10 @@
 
             document.addEventListener('livewire:load', () => {
                 @this.on('refresh', (data) => {
+                    /**
+                     * @NOTE A bug in Frappe-charts prevent us from just
+                     * updating the chart, instead we need to redraw it
+                     */
                     // chart.update(data);
                     // chart.draw();
                     drawChart(data);
