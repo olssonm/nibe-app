@@ -45,7 +45,7 @@ $ php artisan migrate
 To be able to use this application you will first need to go through a few steps:
 
 1. Connect your heat system to [Nibe Uplink](https://www.nibeuplink.com/)
-2. Create a developer-account on the [Nibe Uplink developer-portal](https://api.nibeuplink.com/)
+2. Create a developer-account on the [Nibe Uplink developer-portal](https://api.nibeuplink.com/) and register a new application. The callback-URL should be `https://{yoursite.com}/auth/callback`
 
 After that you can navigate to your configured application URL and go through the setup-wizard where you get to select which system to connect:
 
