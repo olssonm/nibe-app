@@ -10,12 +10,15 @@
     <div id="temperature-chart"></div>
 
     {{-- PARAMETERS --}}
-    <div class="row">
-        <div class="col-3">
-            <label for="range" class="form-label">Range</label>
-            {!! Form::select('range', config('nibe.ranges'), null, ['class' => 'form-select', 'wire:model' => 'range']) !!}
+    <div>
+        <div class="row">
+            <div class="col-3">
+                <label for="range" class="form-label">Range</label>
+                {!! Form::select('range', config('nibe.ranges'), null, ['class' => 'form-select', 'wire:model' => 'range']) !!}
+            </div>
         </div>
     </div>
+
     <div class="row mt-4">
         <div class="col-3">
             <label for="range" class="form-label">Parameters</label>
@@ -56,7 +59,8 @@
                     height: 450,
                     animate: 0,
                     axisOptions: {
-                        xIsSeries: true // default: false
+                        xIsSeries: 1, // default: false
+                        xAxisMode: 'tick'
                     },
                     lineOptions: {
                         hideDots: 1,

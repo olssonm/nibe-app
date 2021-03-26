@@ -7,13 +7,19 @@ use Illuminate\Support\Str;
 
 class Range
 {
-    public $grouping = null;
+    public string $format = 'Y-m-d H:i';
 
-    public $range;
+    public string $range;
 
-    public $from;
+    public Carbon $from;
 
-    public $to;
+    public Carbon $to;
+
+    protected array $formats = [
+        'default' => 'Y-m-d H:i',
+        'hourly' => 'Y-m-d H:00',
+        'daily' => 'Y-m-d'
+    ];
 
     public function __construct(string $range = 'today', string $from = null, string $to = null)
     {
@@ -25,6 +31,13 @@ class Range
             $this->$method();
         } elseif($method == 'custom') {
             $this->$method($from, $to);
+        }
+
+        $diff = $this->from->diffInDays($this->to);
+        if ($diff >= 32) {
+            $this->format = $this->formats['daily'];
+        } elseif ($diff >= 7) {
+            $this->format = $this->formats['hourly'];
         }
     }
 

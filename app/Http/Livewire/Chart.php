@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\System;
 use App\Repositories\ChartRepository;
 use App\Services\Range;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -16,6 +17,10 @@ class Chart extends Component
     ];
 
     public string $range = 'today';
+
+    public string $from;
+
+    public string $to;
 
     public Collection $chartData;
 

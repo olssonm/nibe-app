@@ -18,8 +18,8 @@ class ChartRepository
                 });
         }]);
 
-        $system->parameters = $system->parameters->groupBy(function($item) {
-            return $item->created_at->format('Ymd');
+        $system->parameters = $system->parameters->groupBy(function($item) use ($range) {
+            return $item->created_at->format($range->format);
         })->map(function($item) use ($datapoints) {
             $data = [];
             foreach ($datapoints as $value) {
@@ -42,8 +42,8 @@ class ChartRepository
         }
 
         $data = collect([
-            'labels' => $system->parameters->unique('fetch_id')->pluck('created_at')->map(function ($data) {
-                return $data->format('Y-m-d H:i');
+            'labels' => $system->parameters->unique('fetch_id')->pluck('created_at')->map(function ($data) use ($range) {
+                return $data->format($range->format);
             })->toArray(),
             'datasets' => $datasets
         ]);
