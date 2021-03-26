@@ -21,6 +21,6 @@
             'this_month' => 'This month',
             'last_month' => 'Last month',
             'this_year' => 'This year',
-            'custom' => 'Custom',
+            'max' => 'Max',
         ]
     ];

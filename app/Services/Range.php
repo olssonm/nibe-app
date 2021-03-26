@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Parameter;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -29,8 +30,6 @@ class Range
 
         if(method_exists($this, $method) && $method !== 'custom') {
             $this->$method();
-        } elseif($method == 'custom') {
-            $this->$method($from, $to);
         }
 
         // Set the resolution/grouping based on the diff in days
@@ -84,9 +83,9 @@ class Range
         $this->to = now();
     }
 
-    private function custom(string $from, string $to)
+    private function max()
     {
-        $this->from = Carbon::parse($from);
-        $this->to = Carbon::parse($to);
+        $this->from = Parameter::first()->created_at;
+        $this->to = now();
     }
 }
