@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,13 @@ class Parameter extends Model
     protected $dates = [
         'created_at',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('ordered', function (Builder $builder) {
+            $builder->orderBy('created_at', 'ASC');
+        });
+    }
 
     public function fetch()
     {

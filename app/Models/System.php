@@ -24,7 +24,6 @@ class System extends Model
 
     public function parameters()
     {
-        return $this->hasManyThrough(Parameter::class, Fetch::class)
-            ->orderBy('created_at', 'ASC');
+        return $this->hasManyThrough(Parameter::class, Fetch::class);
     }
 }
