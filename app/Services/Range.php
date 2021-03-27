@@ -8,29 +8,46 @@ use Illuminate\Support\Str;
 
 class Range
 {
-    public string $format = 'Y-m-d H:i';
-
-    public string $range;
-
+    /**
+     * Start of range
+     *
+     * @var \Carbon\Carbon
+     */
     public Carbon $from;
 
+    /**
+     * End of range
+     *
+     * @var \Carbon\Carbon
+     */
     public Carbon $to;
 
+    /**
+     * Current format
+     *
+     * @var string
+     */
+    protected string $format = 'Y-m-d H:i';
+
+    /**
+     * Available formats
+     *
+     * @var array
+     */
     protected array $formats = [
         'default' => 'Y-m-d H:i',
         'hourly' => 'Y-m-d H:00',
         'daily' => 'Y-m-d'
     ];
 
-    public function __construct(string $range = 'today', string $from = null, string $to = null)
+    /**
+     * Constructor
+     *
+     * @param string $period
+     */
+    public function __construct(string $period = 'today')
     {
-        $this->range = $range;
-
-        $method = Str::camel($range);
-
-        if (method_exists($this, $method) && $method !== 'custom') {
-            $this->$method();
-        }
+        $this->setRange($period);
 
         // Set the resolution/grouping based on the diff in days
         $diff = $this->from->diffInDays($this->to);
@@ -41,51 +58,84 @@ class Range
         }
     }
 
-    private function today()
+    /**
+     * Get the start of range
+     *
+     * @return Carbon
+     */
+    public function getFrom(): Carbon
     {
-        $this->from = now()->startOfDay();
-        $this->to = now();
+        return $this->from;
     }
 
-    private function yesterday()
+    /**
+     * Get the end of range
+     *
+     * @return Carbon
+     */
+    public function getTo(): Carbon
     {
-        $this->from = now()->subDay()->startOfDay();
-        $this->to = now()->subDay()->endOfDay();
+        return $this->to;
     }
 
-    private function last7Days()
+    /**
+     * Get current format
+     *
+     * @return string
+     */
+    public function getFormat(): string
     {
-        $this->from = now()->subDays(7)->startOfDay();
-        $this->to = now();
+        return $this->format;
     }
 
-    private function last30Days()
+    /**
+     * Set the start and end of range
+     *
+     * @param string $period
+     * @return void
+     */
+    protected function setRange(string $period): void
     {
-        $this->from = now()->subDays(30)->startOfDay();
-        $this->to = now();
-    }
+        switch ($period) {
+            case 'today':
+                $this->from = now()->startOfDay();
+                $this->to = now();
+                break;
 
-    private function thisMonth()
-    {
-        $this->from = now()->startOfMonth();
-        $this->to = now();
-    }
+            case 'yesterday':
+                $this->from = now()->subDay()->startOfDay();
+                $this->to = now()->subDay()->endOfDay();
+                break;
 
-    private function lastMonth()
-    {
-        $this->from = now()->subMonth()->startOfMonth();
-        $this->to = now()->subMonth()->endOfMonth();
-    }
+            case 'last_7_days':
+                $this->from = now()->subDays(7)->startOfDay();
+                $this->to = now();
+                break;
 
-    private function thisYear()
-    {
-        $this->from = now()->startOfYear();
-        $this->to = now();
-    }
+            case 'last_30_days':
+                $this->from = now()->subDays(30)->startOfDay();
+                $this->to = now();
+                break;
 
-    private function max()
-    {
-        $this->from = Parameter::first()->created_at;
-        $this->to = now();
+            case 'this_month':
+                $this->from = now()->startOfMonth();
+                $this->to = now();
+                break;
+
+            case 'last_month':
+                $this->from = now()->subMonth()->startOfMonth();
+                $this->to = now()->subMonth()->endOfMonth();
+                break;
+
+            case 'this_year':
+                $this->from = now()->startOfYear();
+                $this->to = now();
+                break;
+
+            case 'max':
+                $this->from = Parameter::first()->created_at;
+                $this->to = now();
+                break;
+        }
     }
 }

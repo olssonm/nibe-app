@@ -88,7 +88,6 @@ class Import extends Command
             ]);
 
             foreach ($fields as $key => $name) {
-
                 // Assume bad row if count is wrong
                 if (count($data[$i]) < count($fields)) {
                     continue;

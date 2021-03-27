@@ -15,7 +15,7 @@ class AuthorizationController extends Controller
      */
     public function auth()
     {
-        // Set a state that will later be verified
+        // Set a state that will later be validated on return
         $state = Str::random();
         session([
             'state' => $state
