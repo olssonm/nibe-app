@@ -6,7 +6,7 @@ A ready-to-use app for local data-gathering for NIBE's heat systems via the NIBE
 
 This app is very much opinionated and built for myself and my own use cases, but feel free to fork and use. If there are any missing features or bugs, [PRs are very much welcome](https://github.com/olssonm/nibe-app/pulls).
 
-I've also released an oauth-provider built on [thephpleague/oauth2-client](https://github.com/thephpleague/oauth2-client) if you rather build your own app from scratch.
+I've also [released an oauth-provider](https://github.com/olssonm/oauth2-nibe) built on [thephpleague/oauth2-client](https://github.com/thephpleague/oauth2-client) if you rather build your own app from scratch.
 
 *Note: This application only communicates via the Nibe Uplink-API, not the myUplink-API which for example the S-series uses.*
 
@@ -81,6 +81,7 @@ Future things to improve or implement. [PRs are welcome](https://github.com/olss
 
 - Read more parameters than the four that is currently read
 - Implement a custom range with a datepicker instead of "just" predefined ranges
+- Improve dataset-algorithm; currently for longer anges an average for a whole days is calculated – which may be missleading if for example more datapoints is available during the day than the night
 - Read the smart-pricing levels (I myself do not have this active and can therefore not read those levels)
 - Support more systems than one
 - Methods via the WRITESYSTEM-scope to enable updating settings remotely (might require a premium account)

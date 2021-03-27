@@ -1,5 +1,6 @@
 <div>
 
+    {{-- SYSTEM --}}
     <div class="row my-4">
         <div class="col">
             System: {{ $system->product }} <small>(serial number: {{ $system->serial_number }})</small>
@@ -7,18 +8,26 @@
     </div>
 
     {{-- CHART --}}
-    <div id="temperature-chart"></div>
+    @if ($chartData->get('datapoints'))
+        <div id="temperature-chart"></div>
+    @else
+        <div class="card">
+            <div class="card-body text-dark">
+                No data to display
+            </div>
+        </div>
+    @endif
 
     {{-- PARAMETERS --}}
     <div class="row my-4">
-        <div class="col-3">
+        <div class="col-md-3">
             <label for="range" class="form-label">Range</label>
             {!! Form::select('range', config('nibe.ranges'), null, ['class' => 'form-select', 'wire:model' => 'range']) !!}
         </div>
     </div>
 
     <div class="row my-4">
-        <div class="col-3">
+        <div class="col-md-3">
             <label for="range" class="form-label">Parameters</label>
             @foreach (config('nibe.parameters') as $key => $name)
                 <div class="form-check">
@@ -53,6 +62,11 @@
             });
 
             function drawChart(data) {
+
+                if (data.datapoints == 0) {
+                    return;
+                }
+
                 const chart = new frappe.Chart("#temperature-chart", {
                     title: '',
                     data: data,
@@ -61,10 +75,12 @@
                     animate: 0,
                     axisOptions: {
                         xIsSeries: 1, // default: false
-                        xAxisMode: 'tick'
+                        xAxisMode: 'tick',
+
                     },
                     lineOptions: {
-                        hideDots: 1
+                        hideDots: 1,
+                        spline: 1
                     },
                     colors: ['#EF4444', '#F59E0B', '#10B981', '#3B82F6']
                 });

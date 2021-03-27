@@ -50,6 +50,7 @@ class ChartRepository
         }, $datapoints));
 
         return collect([
+            'datapoints' => count($parameters),
             'labels' => $parameters->unique('fetch_id')->pluck('created_at')->map(
                 function ($data) use ($range) {
                     return $data->format($range->getFormat());
