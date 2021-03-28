@@ -1,8 +1,12 @@
 {
-    "name": "laravel/laravel",
+    "name": "olssonm/nibe-app",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "App for the NIBE Uplink API.",
+    "keywords": [
+        "nibe",
+        "nibe uplink",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
@@ -14,7 +18,7 @@
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.4",
         "olssonm/l5-very-basic-auth": "^6.5",
-        "olssonm/oauth2-nibe": "dev-master"
+        "olssonm/oauth2-nibe": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
@@ -30,7 +34,6 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },
@@ -41,8 +44,8 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "./../oauth2-nibe"
+            "type": "vcs",
+            "url": "git@github.com:olssonm/oauth2-nibe.git"
         }
     ],
     "scripts": {
