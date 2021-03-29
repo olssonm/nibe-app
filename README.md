@@ -75,6 +75,12 @@ $ php artisan nibe:import
 
 *Note: you have to setup the application and go through the setup wizard before this step.*
 
+### Backups
+
+[`spatie/laravel-backup`](https://github.com/spatie/laravel-backup) is installed with this package. Edit the .env-file to set your backup settings and then run `php artisan backup:run` to take a backup.
+
+Check out the [full documentation for more information](https://spatie.be/docs/laravel-backup/v7/introduction) regarding backups.
+
 ## Todo
 
 Future things to improve or implement. [PRs are welcome](https://github.com/olssonm/nibe-app/pulls)!

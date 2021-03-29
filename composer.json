@@ -18,7 +18,8 @@
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.4",
         "olssonm/l5-very-basic-auth": "^6.5",
-        "olssonm/oauth2-nibe": "^1.0"
+        "olssonm/oauth2-nibe": "^1.0",
+        "spatie/laravel-backup": "^6.15"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
