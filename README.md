@@ -21,9 +21,9 @@ This application should be able to run on for example a Raspberry Pi or a low en
 You can either clone this repo via Git (or download it directly) and then install the dependencies:
 
 ```
-$ git clone olssonm/nibe-app
-$ cd olssonm/nibe-app
-$ composer install
+$ git clone git@github.com:olssonm/nibe-app.git
+$ cd nibe-app
+$ composer create-project
 ```
 
 Or install it via `create-project`:
