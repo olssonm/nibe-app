@@ -12,7 +12,7 @@
 
         // Environments where the middleware is active. Use "*" to protect all envs
         'envs'              => [
-            '*'
+            (env('APP_USERNAME', null) && env('APP_PASSWORD', null)) ? '*' : 'not-active'
         ],
 
         // Message to display if the user "opts out"/clicks "cancel"
