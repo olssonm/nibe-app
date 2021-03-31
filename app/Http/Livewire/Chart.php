@@ -18,10 +18,6 @@ class Chart extends Component
 
     public string $range = 'last_30_days';
 
-    public string $from;
-
-    public string $to;
-
     public Collection $chartData;
 
     public System $system;
@@ -29,11 +25,6 @@ class Chart extends Component
     public function mount(System $system)
     {
         $this->system = $system;
-
-        $this->period = [
-            'from' => now()->subWeek(),
-            'to' => now()
-        ];
     }
 
     public function render(ChartRepository $chartRepository)
