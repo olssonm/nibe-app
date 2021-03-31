@@ -123,8 +123,8 @@ class Range
                 break;
 
             case 'last_month':
-                $this->from = now()->subMonth()->startOfMonth();
-                $this->to = now()->subMonth()->endOfMonth();
+                $this->from = now()->subMonthNoOverflow()->startOfMonth();
+                $this->to = now()->subMonthNoOverflow()->endOfMonth();
                 break;
 
             case 'this_year':
