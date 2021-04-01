@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b1d33e5e7372a4e936fbb0d6941fc0c",
+    "content-hash": "f37cc4da9b8365a06324f4847207aad5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2111,7 +2111,7 @@
             "version": "v1.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:olssonm/oauth2-nibe.git",
+                "url": "https://github.com/olssonm/oauth2-nibe.git",
                 "reference": "7bd8bb7fd5a2a8ff0fef62cb9872debdf70e7cf5"
             },
             "dist": {
@@ -2135,11 +2135,7 @@
                     "Olssonm\\OAuth2\\Client\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Olssonm\\OAuth2\\Client\\Test\\": "test/src/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2159,8 +2155,8 @@
                 "oauth2"
             ],
             "support": {
-                "source": "https://github.com/olssonm/oauth2-nibe/tree/v1.0",
-                "issues": "https://github.com/olssonm/oauth2-nibe/issues"
+                "issues": "https://github.com/olssonm/oauth2-nibe/issues",
+                "source": "https://github.com/olssonm/oauth2-nibe/tree/v1.0"
             },
             "time": "2021-03-26T14:28:24+00:00"
         },
