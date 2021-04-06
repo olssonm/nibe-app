@@ -18,8 +18,6 @@ class Chart extends Component
 
     public string $range = 'last_30_days';
 
-    public Collection $chartData;
-
     public System $system;
 
     public function mount(System $system)
@@ -31,10 +29,10 @@ class Chart extends Component
     {
         $range = new Range($this->range);
 
-        $this->chartData = $chartRepository->compile($this->system, $range, $this->datapoints);
+        $chartData = $chartRepository->compile($this->system, $range, $this->datapoints);
 
-        $this->emit('refresh', $this->chartData);
+        $this->emit('refresh', $chartData);
 
-        return view('livewire.chart');
+        return view('livewire.chart', ['chartData' => $chartData]);
     }
 }
