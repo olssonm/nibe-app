@@ -7,36 +7,42 @@
         </div>
     </div>
 
-    {{-- CHART --}}
-    @if ($chartData->get('datapoints'))
-        <div id="temperature-chart"></div>
-    @else
-        <div class="card">
-            <div class="card-body text-dark">
-                No data to display
-            </div>
-        </div>
-    @endif
-
-    {{-- PARAMETERS --}}
-    <div class="row my-4">
-        <div class="col-md-3">
-            <label for="range" class="form-label">Range</label>
-            {!! Form::select('range', config('nibe.ranges'), null, ['class' => 'form-select', 'wire:model' => 'range']) !!}
-        </div>
+    <div wire:loading>
+        <img alt="" src="{{ asset('/img/rings.svg') }}" />
     </div>
 
-    <div class="row my-4">
-        <div class="col-md-3">
-            <label for="range" class="form-label">Parameters</label>
-            @foreach (config('nibe.parameters') as $key => $name)
-                <div class="form-check">
-                    <input id="{{ $key }}" class="form-check-input" type="checkbox" value="{{ $key }}" wire:model="datapoints">
-                    <label class="form-check-label" for="{{ $key }}">
-                        {{ $name }}
-                    </label>
+    <div wire:loading.remove>
+        {{-- CHART --}}
+        @if ($chartData->get('datapoints'))
+            <div id="temperature-chart"></div>
+        @else
+            <div class="card">
+                <div class="card-body text-dark">
+                    No data to display
                 </div>
-            @endforeach
+            </div>
+        @endif
+
+        {{-- PARAMETERS --}}
+        <div class="row my-4">
+            <div class="col-md-3">
+                <label for="range" class="form-label">Range</label>
+                {!! Form::select('range', config('nibe.ranges'), null, ['class' => 'form-select', 'wire:model' => 'range']) !!}
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-3">
+                <label for="range" class="form-label">Parameters</label>
+                @foreach (config('nibe.parameters') as $key => $name)
+                    <div class="form-check">
+                        <input id="{{ $key }}" class="form-check-input" type="checkbox" value="{{ $key }}" wire:model="datapoints">
+                        <label class="form-check-label" for="{{ $key }}">
+                            {{ $name }}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 
