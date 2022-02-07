@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\System;
 use App\Services\Range;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Support\Collection;
 
 class ChartRepository
@@ -21,42 +22,45 @@ class ChartRepository
      */
     public function compile(System $system, Range $range, array $datapoints): Collection
     {
-        $system->load(['parameters' => function ($q) use ($range, $datapoints) {
-            $q->whereIn('name', $datapoints)
-                ->where(function ($q2) use ($range) {
-                    $q2->where('parameters.created_at', '>=', $range->getFrom())
-                        ->where('parameters.created_at', '<=', $range->getTo());
-                });
-        }]);
+        $parameters = DB::table('parameters')
+            ->join('fetches', function($join) use ($system) {
+                $join->on('parameters.fetch_id', '=', 'fetches.id')
+                    ->where('fetches.system_id', $system->id);
+            })
+            ->where(function ($q2) use ($range) {
+                $q2->where('parameters.created_at', '>=', $range->getFrom())
+                    ->where('parameters.created_at', '<=', $range->getTo());
+            })
+            ->select('parameters.id', 'fetch_id', 'name', DB::raw('avg(value) as avg_value, DATE_FORMAT(TIMESTAMP(created_at), "' . $range->getSqlFormat() . '") as formatted_date'))
+            ->groupBy('name', 'formatted_date')
+            ->get();
 
-        $parameters = $system->parameters->groupBy(function ($item) use ($range) {
-            return $item->created_at->format($range->getFormat());
-        })->map(function ($item) use ($datapoints) {
-            return array_map(function ($value) use ($item) {
-                return collect([
-                    'name' => $value,
-                    'value' => round($item->where('name', $value)->avg('value'), 1),
-                    'fetch_id' => $item->first()->fetch_id,
-                    'created_at' => Carbon::parse($item->first()->created_at)
-                ]);
-            }, $datapoints);
-        })->flatten(1);
-
-        $datasets = collect(array_map(function($value) use ($parameters) {
+        $datasets = collect(array_map(function($name) use ($parameters) {
             return [
-                'name' => config('nibe.parameters_shortname.' . $value),
-                'values' => $parameters->where('name', $value)->pluck('value')->toArray()
+                'name' => config('nibe.parameters_shortname.' . $name),
+                'values' => $parameters->where('name', $name)->pluck('avg_value')->map(function($value) use ($name) {
+                    return round($this->formatValue($name, $value), 1);
+                })->toArray()
             ];
         }, $datapoints));
 
         return collect([
             'datapoints' => count($parameters),
-            'labels' => $parameters->unique('fetch_id')->pluck('created_at')->map(
+            'labels' => $parameters->unique('fetch_id')->pluck('formatted_date')->map(
                 function ($data) use ($range) {
-                    return $data->format($range->getFormat());
+                    return Carbon::parse($data)->format($range->getFormat());
                 }
             )->toArray(),
             'datasets' => $datasets
         ]);
+    }
+
+    private function formatValue($name, $value)
+    {
+        if (in_array($name, ['indoor_temperature', 'outdoor_temperature', 'hot_water_temperature'])) {
+            return round($value / 10, 1);
+        }
+
+        return $value;
     }
 }

@@ -29,6 +29,8 @@ class Range
      */
     protected string $format = 'Y-m-d H:i';
 
+    protected string $sqlFormat = '%Y-%m-%d %H:%i';
+
     /**
      * Available formats
      *
@@ -38,6 +40,12 @@ class Range
         'default' => 'Y-m-d H:i',
         'hourly' => 'Y-m-d H:00',
         'daily' => 'Y-m-d'
+    ];
+
+    protected array $sqlFormats = [
+        'default' => '%Y-%m-%d %H:%i:00',
+        'hourly' => '%Y-%m-%d %H:00:00',
+        'daily' => '%Y-%m-%d 00:00:00'
     ];
 
     /**
@@ -53,8 +61,13 @@ class Range
         $diff = $this->from->diffInDays($this->to);
         if ($diff >= 32) {
             $this->format = $this->formats['daily'];
+            $this->sqlFormat = $this->sqlFormats['daily'];
         } elseif ($diff >= 7) {
             $this->format = $this->formats['hourly'];
+            $this->sqlFormat = $this->sqlFormats['hourly'];
+        } else {
+            $this->format = $this->formats['default'];
+            $this->sqlFormat = $this->sqlFormats['default'];
         }
     }
 
@@ -86,6 +99,16 @@ class Range
     public function getFormat(): string
     {
         return $this->format;
+    }
+
+    /**
+     * Get current format
+     *
+     * @return string
+     */
+    public function getSqlFormat(): string
+    {
+        return $this->sqlFormat;
     }
 
     /**
