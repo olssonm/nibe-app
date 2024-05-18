@@ -29,12 +29,6 @@ class Client
 
     public function __construct(array $params = [])
     {
-        // If token is present
-        if ($this->tokenExists()) {
-            $data = Storage::disk('token')->get('token.txt');
-            $this->token = new AccessToken(json_decode($data, true));
-        }
-
         $params = array_merge(
             config('services.nibe'),
             [
@@ -46,6 +40,16 @@ class Client
         );
 
         $this->client = new GenericProvider($params);
+
+        // If token is present
+        if ($this->tokenExists()) {
+            $data = Storage::disk('token')->get('token.txt');
+            $this->token = new AccessToken(json_decode($data, true));
+        }
+
+        if (!$this->tokenExists() || $this->token->hasExpired()) {
+            return $this->setAccessToken('');
+        }
     }
 
     /**
