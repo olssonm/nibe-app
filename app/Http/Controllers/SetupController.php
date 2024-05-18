@@ -24,7 +24,7 @@ class SetupController extends Controller
     {
         // Setup auth
         if (!$this->client->tokenExists()) {
-            return $this->auth();
+            return $this->client->setAccessToken('');
         }
 
         // If auth is completed, go to list systems

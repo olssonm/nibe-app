@@ -14,6 +14,6 @@ trait ManagesSystems
      */
     public function getSystems()
     {
-        return $this->get('systems');
+        return $this->get('systems/me');
     }
 }
