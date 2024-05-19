@@ -18,18 +18,16 @@ trait ManagesSystemParameters
     {
         if (!count($payload)) {
             $payload = [
-                'indoor_temperature',
-                'outdoor_temperature',
-                'hot_water_temperature',
-                'fan_speed',
-                'smart_temp_status'
+                '40004', // Outdoor temperature
+                '40013', // Hotwater temperature
+                '40033', // Indoor temperature
             ];
         }
 
         $payload = http_build_query([
-            'parameterIds' => $payload
+            'parameters' => implode(',', $payload)
         ]);
 
-        return $this->get(sprintf('systems/%s/parameters?%s', $system, $payload));
+        return $this->get(sprintf('devices/%s/points?%s', $system, $payload));
     }
 }

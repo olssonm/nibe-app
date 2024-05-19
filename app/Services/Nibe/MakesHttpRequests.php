@@ -7,7 +7,7 @@ namespace App\Services\Nibe;
  */
 trait MakesHttpRequests
 {
-    protected $baseEndpoint = 'https://api.nibeuplink.com/api/v1/%s';
+    protected $baseEndpoint = 'https://api.myuplink.com/v2/%s';
 
     public function get($uri)
     {
@@ -24,9 +24,9 @@ trait MakesHttpRequests
      */
     public function request(string $verb, string $endpoint, array $payload = [])
     {
-        if ($this->token->hasExpired()) {
-            $this->refreshToken($this->token);
-        }
+        // if ($this->token->hasExpired()) {
+        //     $this->refreshToken($this->token);
+        // }
 
         $request = $this->client->getAuthenticatedRequest(
             $verb,

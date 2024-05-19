@@ -79,7 +79,6 @@ class Import extends Command
                 $fields[$key] = 'indoor_temperature';
             }
         }
-        $fields[] = 'fan_speed';
 
         // Finally, do the import
         for ($i = 1; $i < count($data); $i++) {
@@ -96,8 +95,6 @@ class Import extends Command
                 if (isset($data[$i][$key]) && !is_numeric($data[$i][$key])) {
                     continue;
                 }
-
-                $value = ($name == 'fan_speed') ? $defaultFan : $data[$i][$key] * 10;
 
                 Parameter::create([
                     'fetch_id' => $fetch->id,

@@ -20,28 +20,30 @@
         </div>
     @else
         <div class="mb-4 row">
-            @foreach ($systems->objects as $object)
-                <div class="col-md-3">
-                    <p>
-                        <strong>{{ $object->name }}</strong>
-                        <small>{{ $object->serialNumber }}</small>
-                    </p>
-                    @if (count($object->productImage->sizes))
-                        <img src="https://www.nibeuplink.com{{ $object->productImage->sizes[0]->url }}" class="img-fluid" alt="">
-                    @endif
+            @foreach ($systems->systems as $system)
+                @foreach ($system->devices as $device)
+                    <div class="col-md-3">
+                        <p>
+                            <strong>{{ $device->product->name }}</strong>
+                            <small>{{ $device->product->serialNumber }}</small>
+                        </p>
+                        {{-- @if (count($object->productImage->sizes))
+                            <img src="https://www.nibeuplink.com{{ $object->productImage->sizes[0]->url }}" class="img-fluid" alt="">
+                        @endif --}}
 
-                    <div class="mt-4">
-                        {!! Form::open() !!}
-                            {!! Form::hidden('system_id', $object->systemId) !!}
-                            {!! Form::hidden('name', $object->name) !!}
-                            {!! Form::hidden('product', $object->productName) !!}
-                            {!! Form::hidden('serial_number', $object->serialNumber) !!}
-                            <div class="gap-2 d-grid col-6">
-                                {!! Form::submit('Select', ['class' => 'btn btn-sm d-block btn-light']) !!}
-                            </div>
-                        {!! Form::close() !!}
+                        <div class="mt-4">
+                            {!! Form::open() !!}
+                                {!! Form::hidden('system_id', $device->id) !!}
+                                {!! Form::hidden('name', $device->product->name) !!}
+                                {!! Form::hidden('product', $device->product->name) !!}
+                                {!! Form::hidden('serial_number', $device->product->serialNumber) !!}
+                                <div class="gap-2 d-grid col-6">
+                                    {!! Form::submit('Select', ['class' => 'btn btn-sm d-block btn-light']) !!}
+                                </div>
+                            {!! Form::close() !!}
+                        </div>
                     </div>
-                </div>
+                @endforeach
             @endforeach
         </div>
     @endif

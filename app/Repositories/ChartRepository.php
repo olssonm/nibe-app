@@ -57,7 +57,7 @@ class ChartRepository
 
     private function formatValue($name, $value)
     {
-        if (in_array($name, ['indoor_temperature', 'outdoor_temperature', 'hot_water_temperature', 'smart_temp_status'])) {
+        if (in_array($name, ['indoor_temperature', 'outdoor_temperature', 'hot_water_temperature'])) {
             return round($value / 10, 1);
         }
 

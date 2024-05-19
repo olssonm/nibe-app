@@ -6,9 +6,7 @@ A ready-to-use app for local data-gathering for NIBE's heat systems via the NIBE
 
 This app is very much opinionated and built for myself and my own use cases, but feel free to fork and use. If there are any missing features or bugs, [PRs are very much welcome](https://github.com/olssonm/nibe-app/pulls).
 
-I've also [released an oauth-provider](https://github.com/olssonm/oauth2-nibe) built on [thephpleague/oauth2-client](https://github.com/thephpleague/oauth2-client) if you rather build your own app from scratch.
-
-*Note: This application only communicates via the Nibe Uplink-API, not the myUplink-API which for example the S-series uses.*
+**This is "v2" of the app which uses MyUplink as Nibe Uplink is to be shut down i june 2024.** For the older version, check the releases-page.
 
 ## Prerequisites
 
@@ -44,8 +42,8 @@ $ php artisan migrate
 
 To be able to use this application you will first need to go through a few steps:
 
-1. Connect your heat system to [Nibe Uplink](https://www.nibeuplink.com/)
-2. Create a developer-account on the [Nibe Uplink developer-portal](https://api.nibeuplink.com/) and register a new application. The callback-URL should be `https://{yoursite.com}/auth/callback`
+1. Connect your heat system to [myUplink](https://www.myuplink.com/)
+2. Create a developer-account on the [myUplink developer-portal](https://dev.myuplink.com/login) and register a new application. The callback-URL should be `https://{yoursite.com}/auth/callback`
 
 After that you can navigate to your configured application URL and go through the setup-wizard where you get to select which system to connect:
 
@@ -96,4 +94,4 @@ Future things to improve or implement. [PRs are welcome](https://github.com/olss
 
 The MIT License (MIT). Please see the [LICENSE.md](LICENSE.md) for more information.
 
-© 2021 [Marcus Olsson](https://marcusolsson.me).
+© 2021-2024 [Marcus Olsson](https://marcusolsson.me).

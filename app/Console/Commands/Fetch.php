@@ -50,10 +50,16 @@ class Fetch extends Command
         $client = new Client();
         $data = $client->getParameters($system->system_id);
 
+        $parameters = [
+            '40033' => 'indoor_temperature',
+            '40004' => 'outdoor_temperature',
+            '40013' => 'hot_water_temperature',
+        ];
+
         foreach ($data as $datum) {
             Parameter::create([
-                'name' => $datum->name,
-                'value' => $datum->rawValue,
+                'name' => $parameters[$datum->parameterId],
+                'value' => $datum->value * 10,
                 'fetch_id' => $fetch->id
             ]);
         }
