@@ -54,8 +54,6 @@ class Fetch extends Command
             '40033' => 'indoor_temperature',
             '40004' => 'outdoor_temperature',
             '40013' => 'hot_water_temperature',
-            '43108' => 'fan_speed',
-            '44908' => 'smart_temp_status',
         ];
 
         foreach ($data as $datum) {

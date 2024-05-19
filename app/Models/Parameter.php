@@ -34,7 +34,7 @@ class Parameter extends Model
     {
         $attribute = $this->attributes['value'];
 
-        if (in_array($this->name, ['indoor_temperature', 'outdoor_temperature', 'hot_water_temperature', 'smart_temp_status'])) {
+        if (in_array($this->name, ['indoor_temperature', 'outdoor_temperature', 'hot_water_temperature'])) {
             return round($attribute / 10, 1);
         }
 
