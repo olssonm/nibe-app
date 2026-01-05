@@ -56,7 +56,8 @@
             "@php artisan key:generate --ansi"
         ],
         "phpsniff": "vendor/bin/phpcs --standard=\"PSR12\" ./app",
-        "phpfix": "vendor/bin/phpcbf --standard=\"PSR12\" ./app"
+        "phpfix": "vendor/bin/phpcbf --standard=\"PSR12\" ./app",
+        "phprc": "bash ./.phprc"
     },
     "extra": {
         "laravel": {
